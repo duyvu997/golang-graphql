@@ -28,7 +28,7 @@ func main() {
 	router := chi.NewRouter()
 	// router.Use(auth.Middleware())
 	router.Use(cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:8080"},
+		AllowedOrigins:   []string{"*0"},
 		AllowCredentials: true,
 		Debug:            false,
 	}).Handler)
