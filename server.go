@@ -10,7 +10,6 @@ import (
 
 	// "github.com/glyphack/graphlq-golang/internal/auth"
 	// _ "github.com/glyphack/graphlq-golang/internal/auth"
-	database "github.com/glyphack/graphlq-golang/internal/pkg/db/mysql"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -33,9 +32,7 @@ func main() {
 		AllowCredentials: true,
 		Debug:            false,
 	}).Handler)
-	database.InitDB()
-	defer database.CloseDB()
-	database.Migrate()
+
 	server := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	router.Handle("/query", server)
