@@ -9,75 +9,19 @@ import (
 	"fmt"
 	"graphql-golang/graph/generated"
 	"graphql-golang/graph/model"
-
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"graphql-golang/internal/app/domain"
+	"graphql-golang/internal/app/entity"
 )
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	broker := "localhost:9092"
-	topic1 := "test1"
-
-	// Create a producer
-	producer, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": broker})
+	var inputUser = entity.CreateUserRequest{Email: input.Email, Password: input.Password, Username: input.Username}
+	result, err := domain.CreateUser(ctx, inputUser)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-
-	deliveryChan := make(chan kafka.Event)
-	// Produce a message to the topic
-	value := "hello, world 11"
-	err = producer.Produce(&kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: &topic1, Partition: 0},
-		Value:          []byte(value),
-	}, deliveryChan)
-	if err != nil {
-		panic(err)
-	}
-	e := <-deliveryChan
-	m := e.(*kafka.Message)
-	if m.TopicPartition.Error != nil {
-		fmt.Printf("Delivery failed: %v", m.TopicPartition.Error)
-	}
-	close(deliveryChan)
-	producer.Close()
-
-	// =================================================================
-	config := &kafka.ConfigMap{
-		"bootstrap.servers":                     "localhost:9092",
-		"group.id":                              "test-group",
-		"go.application.rebalance.enable":       true,
-		"max.in.flight.requests.per.connection": 1,
-	}
-
-	// Create consumer
-	consumer, err := kafka.NewConsumer(config)
-	if err != nil {
-		panic(err)
-	}
-	defer consumer.Close()
-
-	topic := "test1"
-	var user = &model.User{}
-	consumer.SubscribeTopics([]string{topic}, nil)
-	run := true
-	for run {
-		msg, err := consumer.ReadMessage(-1)
-		if err == nil {
-			fmt.Printf("Message on %s: %s\n", msg.TopicPartition, string(msg.Value))
-			run = false
-			com, err := consumer.CommitMessage(msg)
-			fmt.Println("Something right here", com, err)
-			if err != nil {
-				fmt.Println("Error", err)
-			}
-		} else {
-			// The client will automatically try to recover from all errors.
-			fmt.Printf("Consumer error: %v (%v)\n", err, msg)
-		}
-	}
-
-	return user, nil
+	var user = model.User{ID: int(result.UID), Username: result.Username, Email: result.Email, CreatedAt: result.CreatedAt.Format("2006-01-02 15:04:05")}
+	return &user, nil
 }
 
 // User is the resolver for the user field.

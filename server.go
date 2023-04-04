@@ -8,9 +8,6 @@ import (
 	"graphql-golang/graph"
 	"graphql-golang/graph/generated"
 
-	// "graphql-golang/internal/auth"
-	// _ "graphql-golang/internal/auth"
-
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
@@ -26,7 +23,6 @@ func main() {
 	}
 
 	router := chi.NewRouter()
-	// router.Use(auth.Middleware())
 	router.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"*0"},
 		AllowCredentials: true,

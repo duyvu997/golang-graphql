@@ -12,7 +12,6 @@ require (
 	github.com/golang-migrate/migrate v3.5.4+incompatible
 	github.com/rs/cors v1.8.3
 	github.com/vektah/gqlparser/v2 v2.5.1
-	golang.org/x/crypto v0.7.0
 )
 
 require (
@@ -45,5 +44,6 @@ require (
 	github.com/pierrec/lz4/v4 v4.1.17 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
+	golang.org/x/crypto v0.7.0 // indirect
 	golang.org/x/net v0.8.0 // indirect
 )
