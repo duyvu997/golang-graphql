@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/glyphack/graphlq-golang/internal/users"
-	"github.com/glyphack/graphlq-golang/pkg/jwt"
+	"graphql-golang/internal/users"
+	"graphql-golang/pkg/jwt"
 )
 
 var userCtxKey = &contextKey{"user"}

@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/glyphack/graphlq-golang/graph"
-	"github.com/glyphack/graphlq-golang/graph/generated"
+	"graphql-golang/graph"
+	"graphql-golang/graph/generated"
 
-	// "github.com/glyphack/graphlq-golang/internal/auth"
-	// _ "github.com/glyphack/graphlq-golang/internal/auth"
+	// "graphql-golang/internal/auth"
+	// _ "graphql-golang/internal/auth"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
