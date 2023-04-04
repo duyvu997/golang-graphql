@@ -13,6 +13,7 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
+// CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
 	broker := "localhost:9092"
 	topic1 := "test1"

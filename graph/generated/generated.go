@@ -186,7 +186,6 @@ var sources = []*ast.Source{
     name: String!
 }
 
-
 input NewUser {
     username: String!
     password: String!
