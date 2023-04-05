@@ -7,7 +7,7 @@ import (
 	"graphql-golang/internal/app/entity"
 	"time"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 )
 
 func CreateUser(ctx context.Context, input entity.CreateUserRequest) (entity.CreateUserResponse, error) {
